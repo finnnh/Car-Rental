@@ -1,9 +1,9 @@
 package com.finn.carrental.api
 
-import com.finn.carrental.domain.UserService
 import com.finn.carrental.api.dtos.UserRequest
 import com.finn.carrental.api.dtos.UserResponse
 import com.finn.carrental.api.dtos.UserResponse.Companion.toDTO
+import com.finn.carrental.domain.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -29,5 +29,4 @@ class UserController(val userService: UserService) {
     fun createUser(@RequestBody request: UserRequest): ResponseEntity<UserResponse> {
         return ResponseEntity(userService.createUser(request).toDTO(), HttpStatus.CREATED)
     }
-
 }

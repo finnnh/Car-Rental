@@ -9,5 +9,4 @@ class UserResponse(val name: String, val id: String, val lastname: String, val e
             return UserResponse(this.name, this.id, this.lastname, this.email)
         }
     }
-
 }

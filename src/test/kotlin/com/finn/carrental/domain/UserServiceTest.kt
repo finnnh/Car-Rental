@@ -1,7 +1,6 @@
 package com.finn.carrental.domain
 
 import com.finn.carrental.api.dtos.UserRequest
-import com.finn.carrental.api.dtos.UserResponse
 import com.finn.carrental.domain.exceptions.AlreadyExistsException
 import com.finn.carrental.domain.models.User
 import com.finn.carrental.persistence.UserRepository
@@ -9,7 +8,6 @@ import com.finn.carrental.persistence.entities.UserEntity
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions
-import org.assertj.core.internal.IgnoringFieldsComparator
 import org.bson.types.ObjectId
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -73,5 +71,4 @@ class UserServiceTest() {
 
         Assertions.assertThat(user.id).isEqualTo("64c7a03aa6148808920a8ab6")
     }
-
 }
