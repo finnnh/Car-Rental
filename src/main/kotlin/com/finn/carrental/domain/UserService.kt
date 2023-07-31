@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(private val userRepository: UserRepository) {
 
-    fun getAllUserByID(): List<User> {
+    fun getAllUser(): List<User> {
         return userRepository.findAll().map { userEntity -> userEntity.toDomain() }
     }
 

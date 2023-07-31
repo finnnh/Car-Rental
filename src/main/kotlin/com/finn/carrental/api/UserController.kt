@@ -17,7 +17,7 @@ class UserController(val userService: UserService) {
 
     @GetMapping("/users")
     fun getAllUsers(): ResponseEntity<List<UserResponse>> {
-        return ResponseEntity.ok(userService.getAllUserByID().map { user -> user.toDTO() })
+        return ResponseEntity.ok(userService.getAllUser().map { user -> user.toDTO() })
     }
 
     @GetMapping("/users/{id}")
