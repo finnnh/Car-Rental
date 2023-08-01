@@ -6,6 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository
 
 interface UserRepository : MongoRepository<UserEntity, String> {
     fun findOneById(id: ObjectId): UserEntity
-
     override fun deleteAll()
 }

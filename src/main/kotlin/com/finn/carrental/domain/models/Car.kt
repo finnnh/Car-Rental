@@ -9,6 +9,4 @@ class Car(val id: String, val brand: String, val model: String, val seats: Int) 
             return Car(this.id.toString(), this.brand, this.model, this.seats)
         }
     }
-
-
 }

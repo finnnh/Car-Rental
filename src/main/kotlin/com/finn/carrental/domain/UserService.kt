@@ -5,6 +5,7 @@ import com.finn.carrental.domain.exceptions.AlreadyExistsException
 import com.finn.carrental.domain.models.User
 import com.finn.carrental.domain.models.User.Companion.toDomain
 import com.finn.carrental.persistence.UserRepository
+import com.finn.carrental.persistence.entities.CarEntity
 import com.finn.carrental.persistence.entities.UserEntity
 import org.bson.types.ObjectId
 import org.springframework.dao.DuplicateKeyException
@@ -27,9 +28,9 @@ class UserService(private val userRepository: UserRepository) {
                 UserEntity(
                     name = userRequest.name,
                     lastname = userRequest.lastname,
-                    email = userRequest.email
-                )
-            ).toDomain()
+                    email = userRequest.email,
+                    cars = listOf()
+                )).toDomain()
         } catch (exception: DuplicateKeyException) {
             throw AlreadyExistsException()
         }
