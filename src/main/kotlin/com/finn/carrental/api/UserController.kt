@@ -5,7 +5,6 @@ import com.finn.carrental.api.dtos.UserResponse
 import com.finn.carrental.api.dtos.UserResponse.Companion.toDTO
 import com.finn.carrental.domain.UserService
 import com.finn.carrental.domain.exceptions.AlreadyExistsException
-import com.finn.carrental.domain.exceptions.NotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -37,7 +36,7 @@ class UserController(val userService: UserService) {
         try {
             val user = userService.createUser(request)?.toDTO()
             return ResponseEntity(user, HttpStatus.CREATED)
-        }catch (exception: AlreadyExistsException) {
+        } catch (exception: AlreadyExistsException) {
             throw ResponseStatusException(HttpStatus.CONFLICT, "User with that Email already exists")
         }
     }

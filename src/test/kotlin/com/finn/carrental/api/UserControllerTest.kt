@@ -63,35 +63,39 @@ class UserControllerTest(@Autowired val mockMvc: MockMvc) {
     fun `createUser() Should return the created User & Created Status`() {
         every { userService.createUser(any()) } returns User("Finn", "64c8c410bebeef1000d78c80", "Lastname", "test@gmail.com")
 
-        val user = UserRequest("Finn",  "Lastname", "test@gmail.com")
+        val user = UserRequest("Finn", "Lastname", "test@gmail.com")
         val mapper = ObjectMapper()
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false)
         val writer = mapper.writer().withDefaultPrettyPrinter()
 
         val requestJson = writer.writeValueAsString(user)
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/users")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(requestJson)).andExpect(
-            status().isCreated)
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestJson)
+        ).andExpect(
+            status().isCreated
+        )
     }
 
     @Test
     fun `createUserThatAlreadyExist() Should throw an AlreadyExistsException`() {
         every { userService.createUser(any()) } throws AlreadyExistsException()
 
-        val user = UserRequest("Finn",  "Lastname", "test@gmail.com")
+        val user = UserRequest("Finn", "Lastname", "test@gmail.com")
         val mapper = ObjectMapper()
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false)
         val writer = mapper.writer().withDefaultPrettyPrinter()
 
         val requestJson = writer.writeValueAsString(user)
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/users")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(requestJson)).andExpect(
-            status().isConflict)
+        mockMvc.perform(
+            MockMvcRequestBuilders.post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestJson)
+        ).andExpect(
+            status().isConflict
+        )
     }
-
 }
-

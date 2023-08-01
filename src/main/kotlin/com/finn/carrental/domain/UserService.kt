@@ -2,14 +2,12 @@ package com.finn.carrental.domain
 
 import com.finn.carrental.api.dtos.UserRequest
 import com.finn.carrental.domain.exceptions.AlreadyExistsException
-import com.finn.carrental.domain.exceptions.NotFoundException
 import com.finn.carrental.domain.models.User
 import com.finn.carrental.domain.models.User.Companion.toDomain
 import com.finn.carrental.persistence.UserRepository
 import com.finn.carrental.persistence.entities.UserEntity
 import org.bson.types.ObjectId
 import org.springframework.dao.DuplicateKeyException
-import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 
 @Service
