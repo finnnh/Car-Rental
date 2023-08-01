@@ -5,7 +5,7 @@ import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository
 
 interface CarRepository : MongoRepository<CarEntity, String> {
-    fun findOneById(id: ObjectId): CarEntity
+    fun findOneById(id: ObjectId): CarEntity?
 
     override fun deleteAll()
 }

@@ -17,6 +17,4 @@ data class UserEntity(
     val lastname: String,
     @Indexed(unique = true)
     val email: String,
-    @DBRef
-    val cars: List<CarEntity>
 )

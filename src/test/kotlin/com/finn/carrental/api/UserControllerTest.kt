@@ -21,11 +21,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@WebMvcTest
+@WebMvcTest(UserController::class)
 class UserControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @MockkBean
     lateinit var userService: UserService
+
+
 
     @Test
     fun `getUserByID() Should Return a User with ID 64c8c410bebeef1000d78c80`() {
