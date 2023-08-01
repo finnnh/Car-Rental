@@ -21,14 +21,14 @@ class UserServiceTest() {
     fun `createUser() Should add A User`() {
         // given
         val userService = UserService(userRepository)
-        val userRequest = UserRequest("Name", "", "")
+        val userRequest = UserRequest("Finn", "Testname", "test@gmail.com")
         every { userRepository.save(any()) } returnsArgument(0)
 
         // when
         val user = userService.createUser(userRequest)
 
         // then
-        val expectedUser = User("Name", "", "", "")
+        val expectedUser = User("Finn", "", "Testname", "test@gmail.com")
         Assertions.assertThat(user).usingRecursiveComparison().ignoringFields("id").isEqualTo(expectedUser)
     }
 
@@ -36,7 +36,7 @@ class UserServiceTest() {
     fun `createUserThatExists() Should Throw AlreadyExistsException`() {
         // given
         val userService = UserService(userRepository)
-        val userRequest = UserRequest("Duplicated User", "", "email@email.com")
+        val userRequest = UserRequest("Duplicated User", "Testname", "test@gmail.com")
 
         every { userRepository.save(any()) } throws DuplicateKeyException("")
 
@@ -51,10 +51,10 @@ class UserServiceTest() {
     fun `getAllUsers() Should return multiple User`() {
         // given
         val userService = UserService(userRepository)
-        every { userRepository.findAll() } returns listOf(UserEntity(name = "", lastname = "", email = ""), UserEntity(name = "", lastname = "", email = ""))
+        every { userRepository.findAll() } returns listOf(UserEntity(name = "Finn", lastname = "Testname", email = "test@gmail.com"), UserEntity(name = "Kostas", lastname = "Testname", email = "test@outlook.com"))
 
         // when
-        val list = userService.getAllUserByID()
+        val list = userService.getAllUsers()
 
         // then
         Assertions.assertThat(list).isNotEmpty()
@@ -64,11 +64,11 @@ class UserServiceTest() {
     fun `getUserByID Should return a User with the given ID`() {
         // given
         val userService = UserService(userRepository)
-        every { userRepository.findOneById(ObjectId("64c7a03aa6148808920a8ab6")) } returns UserEntity(ObjectId("64c7a03aa6148808920a8ab6"), "", "", "")
+        every { userRepository.findOneById(ObjectId("64c7a03aa6148808920a8ab6")) } returns UserEntity(ObjectId("64c7a03aa6148808920a8ab6"), "Finn", "Testname", "test@gmail.com")
 
         // when
         var user = userService.getUserByID("64c7a03aa6148808920a8ab6")
 
-        Assertions.assertThat(user.id).isEqualTo("64c7a03aa6148808920a8ab6")
+        Assertions.assertThat(user!!.id).isEqualTo("64c7a03aa6148808920a8ab6")
     }
 }

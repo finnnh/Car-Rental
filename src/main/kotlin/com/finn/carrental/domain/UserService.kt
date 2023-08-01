@@ -14,15 +14,15 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(private val userRepository: UserRepository) {
 
-    fun getAllUser(): List<User> {
+    fun getAllUsers(): List<User> {
         return userRepository.findAll().map { userEntity -> userEntity.toDomain() }
     }
 
-    fun getUserByID(id: String): User {
-        return userRepository.findOneById(ObjectId(id)).toDomain()
+    fun getUserByID(id: String): User? {
+        return userRepository.findOneById(ObjectId(id))?.toDomain()
     }
 
-    fun createUser(userRequest: UserRequest): User {
+    fun createUser(userRequest: UserRequest): User? {
         try {
             return userRepository.save(
                 UserEntity(
