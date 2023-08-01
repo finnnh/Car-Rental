@@ -34,5 +34,4 @@ class CarController(val carService: CarService) {
     fun createCar(@RequestBody request: CarRequest): ResponseEntity<CarResponse> {
         return ResponseEntity(carService.createCar(request).toDTO(), HttpStatus.CREATED)
     }
-
 }

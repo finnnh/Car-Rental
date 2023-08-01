@@ -19,7 +19,7 @@ class UserService(private val userRepository: UserRepository) {
     }
 
     fun getUserByID(id: String): User? {
-        return userRepository.findOneById(ObjectId(id))?.toDomain()?: throw NotFoundException()
+        return userRepository.findOneById(ObjectId(id))?.toDomain() ?: throw NotFoundException()
     }
 
     fun createUser(userRequest: UserRequest): User? {
@@ -28,8 +28,9 @@ class UserService(private val userRepository: UserRepository) {
                 UserEntity(
                     name = userRequest.name,
                     lastname = userRequest.lastname,
-                    email = userRequest.email,
-                )).toDomain()
+                    email = userRequest.email
+                )
+            ).toDomain()
         } catch (exception: DuplicateKeyException) {
             throw AlreadyExistsException()
         }

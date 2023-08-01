@@ -34,8 +34,6 @@ class CarControllerTest(@Autowired val mockMvc: MockMvc) {
             .andExpect(status().isOk)
             .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("id").value("64c8c410bebeef1000d78c80"))
-
-
     }
 
     @Test
@@ -79,5 +77,4 @@ class CarControllerTest(@Autowired val mockMvc: MockMvc) {
             status().isCreated
         )
     }
-
 }

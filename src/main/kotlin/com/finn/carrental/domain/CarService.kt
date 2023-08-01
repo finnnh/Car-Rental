@@ -17,14 +17,16 @@ class CarService(private val carRepository: CarRepository) {
     }
 
     fun getCarByID(id: String): Car? {
-        return carRepository.findOneById(ObjectId(id))?.toDomain()?: throw NotFoundException()
+        return carRepository.findOneById(ObjectId(id))?.toDomain() ?: throw NotFoundException()
     }
 
     fun createCar(carRequest: CarRequest): Car {
-        return carRepository.save(CarEntity(
-            brand = carRequest.brand,
-            model = carRequest.model,
-            seats = carRequest.seats
-        )).toDomain()
+        return carRepository.save(
+            CarEntity(
+                brand = carRequest.brand,
+                model = carRequest.model,
+                seats = carRequest.seats
+            )
+        ).toDomain()
     }
 }

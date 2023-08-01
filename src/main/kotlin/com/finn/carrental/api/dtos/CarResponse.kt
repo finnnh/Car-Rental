@@ -9,5 +9,4 @@ class CarResponse(val id: String, val brand: String, val model: String, val seat
             return CarResponse(this.id, this.brand, this.model, this.seats)
         }
     }
-
 }

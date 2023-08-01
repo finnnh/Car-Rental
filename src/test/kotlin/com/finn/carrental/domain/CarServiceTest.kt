@@ -34,7 +34,7 @@ class CarServiceTest {
     @Test
     fun `getAllCars() Should return multiple Cars`() {
         val carService = CarService(carRepository)
-        every { carRepository.findAll() } returns listOf(CarEntity(model = "A4", brand = "Audi", seats = 5), CarEntity(model = "M4", brand = "BMW", seats = 5) )
+        every { carRepository.findAll() } returns listOf(CarEntity(model = "A4", brand = "Audi", seats = 5), CarEntity(model = "M4", brand = "BMW", seats = 5))
 
         // when
         val list = carService.getAllCars()
@@ -67,5 +67,4 @@ class CarServiceTest {
             carService.getCarByID("64c7a03aa6148808920a8ab1")
         }
     }
-
 }

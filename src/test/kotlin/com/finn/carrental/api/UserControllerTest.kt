@@ -27,8 +27,6 @@ class UserControllerTest(@Autowired val mockMvc: MockMvc) {
     @MockkBean
     lateinit var userService: UserService
 
-
-
     @Test
     fun `getUserByID() Should Return a User with ID 64c8c410bebeef1000d78c80`() {
         every { userService.getUserByID("64c8c410bebeef1000d78c80") } returns User("Finn", "64c8c410bebeef1000d78c80", "Testname", "test@gmail.com")
