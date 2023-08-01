@@ -2,6 +2,7 @@ package com.finn.carrental.domain
 
 import com.finn.carrental.api.dtos.UserRequest
 import com.finn.carrental.domain.exceptions.AlreadyExistsException
+import com.finn.carrental.domain.exceptions.NotFoundException
 import com.finn.carrental.domain.models.User
 import com.finn.carrental.persistence.UserRepository
 import com.finn.carrental.persistence.entities.UserEntity
@@ -13,7 +14,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.dao.DuplicateKeyException
 
-class UserServiceTest() {
+class UserServiceTest {
 
     private val userRepository: UserRepository = mockk()
 
@@ -51,7 +52,7 @@ class UserServiceTest() {
     fun `getAllUsers() Should return multiple User`() {
         // given
         val userService = UserService(userRepository)
-        every { userRepository.findAll() } returns listOf(UserEntity(name = "Finn", lastname = "Testname", email = "test@gmail.com"), UserEntity(name = "Kostas", lastname = "Testname", email = "test@outlook.com"))
+        every { userRepository.findAll() } returns listOf(UserEntity(name = "Finn", lastname = "TestName", email = "test@gmail.com"), UserEntity(name = "Kostas", lastname = "TestName", email = "test@outlook.com"))
 
         // when
         val list = userService.getAllUsers()
@@ -61,14 +62,27 @@ class UserServiceTest() {
     }
 
     @Test
-    fun `getUserByID Should return a User with the given ID`() {
+    fun `getUserByID() Should return a User with the given ID`() {
         // given
         val userService = UserService(userRepository)
-        every { userRepository.findOneById(ObjectId("64c7a03aa6148808920a8ab6")) } returns UserEntity(ObjectId("64c7a03aa6148808920a8ab6"), "Finn", "Testname", "test@gmail.com")
+        every { userRepository.findOneById(ObjectId("64c7a03aa6148808920a8ab6")) } returns UserEntity(ObjectId("64c7a03aa6148808920a8ab6"), "Finn", "TestName", "test@gmail.com")
 
         // when
-        var user = userService.getUserByID("64c7a03aa6148808920a8ab6")
+        val user = userService.getUserByID("64c7a03aa6148808920a8ab6")
 
         Assertions.assertThat(user!!.id).isEqualTo("64c7a03aa6148808920a8ab6")
+    }
+
+    @Test
+    fun `getUserByIDThatDoenstExists() Should throw NotFoundException`() {
+        // given
+        val userService = UserService(userRepository)
+        every { userRepository.findOneById(any()) } returns null
+
+        // then
+        assertThrows<NotFoundException> {
+            // when
+            userService.getUserByID("64c7a03aa6148808920a8ab1")
+        }
     }
 }

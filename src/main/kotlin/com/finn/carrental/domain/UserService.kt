@@ -2,6 +2,7 @@ package com.finn.carrental.domain
 
 import com.finn.carrental.api.dtos.UserRequest
 import com.finn.carrental.domain.exceptions.AlreadyExistsException
+import com.finn.carrental.domain.exceptions.NotFoundException
 import com.finn.carrental.domain.models.User
 import com.finn.carrental.domain.models.User.Companion.toDomain
 import com.finn.carrental.persistence.UserRepository
@@ -18,7 +19,7 @@ class UserService(private val userRepository: UserRepository) {
     }
 
     fun getUserByID(id: String): User? {
-        return userRepository.findOneById(ObjectId(id))?.toDomain()
+        return userRepository.findOneById(ObjectId(id))?.toDomain() ?: throw NotFoundException()
     }
 
     fun createUser(userRequest: UserRequest): User? {
