@@ -31,3 +31,10 @@ This is an API created with Springboot in Kotlin, that I did during a 2 Week Int
 
 If you have any feedback, please reach out to me at fihoffmann@web.de
 
+##
+
+<p float="left">
+  <img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" width="75"/> 
+  <img src="https://www.vectorlogo.zone/logos/springio/springio-icon.svg" width="75"/>
+  <img src="https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" width="75"/>
+</p>
