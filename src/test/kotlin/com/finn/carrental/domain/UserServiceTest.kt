@@ -28,7 +28,7 @@ class UserServiceTest() {
         val user = userService.createUser(userRequest)
 
         // then
-        val expectedUser = User("Name", "", "", "")
+        val expectedUser = User("Finn", "", "Testname", "test@gmail.com")
         Assertions.assertThat(user).usingRecursiveComparison().ignoringFields("id").isEqualTo(expectedUser)
     }
 
