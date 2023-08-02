@@ -34,7 +34,7 @@ class UserController(val userService: UserService) {
     @PostMapping("")
     fun createUser(@RequestBody request: UserRequest): ResponseEntity<UserResponse> {
         try {
-            val user = userService.createUser(request)?.toDTO()
+            val user = userService.createUser(request.name, request.lastname, request.email)?.toDTO()
             return ResponseEntity(user, HttpStatus.CREATED)
         } catch (exception: AlreadyExistsException) {
             throw ResponseStatusException(HttpStatus.CONFLICT, "User with that Email already exists")

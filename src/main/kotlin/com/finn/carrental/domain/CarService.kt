@@ -1,6 +1,5 @@
 package com.finn.carrental.domain
 
-import com.finn.carrental.api.dtos.CarRequest
 import com.finn.carrental.domain.exceptions.NotFoundException
 import com.finn.carrental.domain.models.Car
 import com.finn.carrental.domain.models.Car.Companion.toDomain
@@ -20,12 +19,19 @@ class CarService(private val carRepository: CarRepository) {
         return carRepository.findOneById(ObjectId(id))?.toDomain() ?: throw NotFoundException()
     }
 
-    fun createCar(carRequest: CarRequest): Car {
+    /**
+     * Create a new Car
+     * @param brand The Brand of the car
+     * @param model The model of the car
+     * @param seats The seats of the car
+     * @return The newly created Car
+     */
+    fun createCar(brand: String, model: String, seats: Int): Car {
         return carRepository.save(
             CarEntity(
-                brand = carRequest.brand,
-                model = carRequest.model,
-                seats = carRequest.seats
+                brand = brand,
+                model = model,
+                seats = seats
             )
         ).toDomain()
     }

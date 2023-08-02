@@ -32,6 +32,6 @@ class CarController(val carService: CarService) {
 
     @PostMapping("")
     fun createCar(@RequestBody request: CarRequest): ResponseEntity<CarResponse> {
-        return ResponseEntity(carService.createCar(request).toDTO(), HttpStatus.CREATED)
+        return ResponseEntity(carService.createCar(request.brand, request.model, request.seats).toDTO(), HttpStatus.CREATED)
     }
 }

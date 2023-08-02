@@ -1,6 +1,5 @@
 package com.finn.carrental.domain
 
-import com.finn.carrental.api.dtos.UserRequest
 import com.finn.carrental.domain.exceptions.AlreadyExistsException
 import com.finn.carrental.domain.exceptions.NotFoundException
 import com.finn.carrental.domain.models.User
@@ -22,11 +21,10 @@ class UserServiceTest {
     fun `createUser() Should add A User`() {
         // given
         val userService = UserService(userRepository)
-        val userRequest = UserRequest("Finn", "Testname", "test@gmail.com")
         every { userRepository.save(any()) } returnsArgument(0)
 
         // when
-        val user = userService.createUser(userRequest)
+        val user = userService.createUser("Finn", "Testname", "test@gmail.com")
 
         // then
         val expectedUser = User("Finn", "", "Testname", "test@gmail.com")
@@ -37,14 +35,13 @@ class UserServiceTest {
     fun `createUserThatExists() Should Throw AlreadyExistsException`() {
         // given
         val userService = UserService(userRepository)
-        val userRequest = UserRequest("Duplicated User", "Testname", "test@gmail.com")
 
         every { userRepository.save(any()) } throws DuplicateKeyException("")
 
         // then
         assertThrows<AlreadyExistsException> {
             // when
-            userService.createUser(userRequest)
+            userService.createUser("Duplicated User", "Testname", "test@gmail.com")
         }
     }
 
@@ -65,7 +62,7 @@ class UserServiceTest {
     fun `getUserByID() Should return a User with the given ID`() {
         // given
         val userService = UserService(userRepository)
-        every { userRepository.findOneById(ObjectId("64c7a03aa6148808920a8ab6")) } returns UserEntity(ObjectId("64c7a03aa6148808920a8ab6"), "Finn", "TestName", "test@gmail.com")
+        every { userRepository.findOneById(any()) } returns UserEntity(ObjectId("64c7a03aa6148808920a8ab6"), "Finn", "TestName", "test@gmail.com")
 
         // when
         val user = userService.getUserByID("64c7a03aa6148808920a8ab6")

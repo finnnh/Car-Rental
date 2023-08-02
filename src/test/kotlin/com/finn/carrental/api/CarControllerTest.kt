@@ -1,6 +1,5 @@
 package com.finn.carrental.api
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -25,6 +24,8 @@ class CarControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @MockkBean
     lateinit var carService: CarService
+
+    private val mapper = jacksonObjectMapper()
 
     @Test
     fun `getCarByID() Should Return a Car with ID 64c8c410bebeef1000d78c80`() {
@@ -52,18 +53,17 @@ class CarControllerTest(@Autowired val mockMvc: MockMvc) {
             .andExpect(status().isOk)
             .andReturn()
 
-        val mapper = jacksonObjectMapper()
-        val notes: List<Car> = mapper.readValue(result.response.contentAsString)
+        val cars: List<Car> = mapper.readValue(result.response.contentAsString)
 
-        Assertions.assertThat(notes).isNotEmpty
+        Assertions.assertThat(cars).isNotEmpty
     }
 
     @Test
     fun `createCar() Should return the created Car & Created Status`() {
-        every { carService.createCar(any()) } returns Car("64c8c410bebeef1000d78c80", "Audi", "A4", 5)
+        every { carService.createCar(any(), any(), any()) } returns Car("64c8c410bebeef1000d78c80", "Audi", "A4", 5)
 
         val car = CarRequest("Audi", "A4", 5)
-        val mapper = ObjectMapper()
+
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false)
         val writer = mapper.writer().withDefaultPrettyPrinter()
 
