@@ -1,6 +1,5 @@
 package com.finn.carrental.api
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -31,7 +30,7 @@ class UserControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `getUserByID() Should Return a User with ID 64c8c410bebeef1000d78c80`() {
-        every { userService.getUserByID(any())} returns User("Finn", "64c8c410bebeef1000d78c80", "Testname", "test@gmail.com")
+        every { userService.getUserByID(any()) } returns User("Finn", "64c8c410bebeef1000d78c80", "Testname", "test@gmail.com")
 
         mockMvc.perform(MockMvcRequestBuilders.get("/users/64c8c410bebeef1000d78c80"))
             .andExpect(status().isOk)

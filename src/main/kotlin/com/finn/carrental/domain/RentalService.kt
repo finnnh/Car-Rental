@@ -33,16 +33,15 @@ class RentalService(private val rentalRepository: RentalRepository, private val 
      * @return The newly created Rent
      */
     fun createRental(userId: String, carId: String, start: LocalDateTime, end: LocalDateTime): Rental {
-
         val carEntity = carRepository.findOneById(ObjectId(carId)) ?: throw NotFoundException()
 
         val rentOfCarList = rentalRepository.findByCarEntity(carEntity)
-        if(rentOfCarList.isNotEmpty()) {
+        if (rentOfCarList.isNotEmpty()) {
             rentOfCarList.forEach {
-                if(it.start.isEqual(start)) throw AlreadyRentedException()
-                if(it.start.isBefore(start) && start.isBefore(it.end)) {
+                if (it.start.isEqual(start)) throw AlreadyRentedException()
+                if (it.start.isBefore(start) && start.isBefore(it.end)) {
                     throw AlreadyRentedException()
-                } else if(it.end.isAfter(end) && start.isBefore(it.start)) {
+                } else if (it.end.isAfter(end) && start.isBefore(it.start)) {
                     throw AlreadyRentedException()
                 }
             }

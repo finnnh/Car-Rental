@@ -1,6 +1,5 @@
 package com.finn.carrental.api
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -64,7 +63,6 @@ class CarControllerTest(@Autowired val mockMvc: MockMvc) {
         every { carService.createCar(any(), any(), any()) } returns Car("64c8c410bebeef1000d78c80", "Audi", "A4", 5)
 
         val car = CarRequest("Audi", "A4", 5)
-
 
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false)
         val writer = mapper.writer().withDefaultPrettyPrinter()

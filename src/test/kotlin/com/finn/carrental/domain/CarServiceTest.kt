@@ -1,6 +1,5 @@
 package com.finn.carrental.domain
 
-import com.finn.carrental.api.dtos.CarRequest
 import com.finn.carrental.domain.exceptions.NotFoundException
 import com.finn.carrental.domain.models.Car
 import com.finn.carrental.persistence.CarRepository
