@@ -26,12 +26,14 @@ class CarService(private val carRepository: CarRepository) {
      * @param seats The seats of the car
      * @return The newly created Car
      */
-    fun createCar(brand: String, model: String, seats: Int): Car {
+    fun createCar(brand: String, model: String, seats: Int, pricePerDistance:Double, pricePerHour:Double): Car {
         return carRepository.save(
             CarEntity(
                 brand = brand,
                 model = model,
-                seats = seats
+                seats = seats,
+                pricePerDistance = pricePerDistance,
+                pricePerHour = pricePerHour
             )
         ).toDomain()
     }

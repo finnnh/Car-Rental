@@ -11,5 +11,11 @@ class CarRequest(
     val model: String,
 
     @Schema(example = "5")
-    val seats: Int
+    val seats: Int,
+
+    @Schema(example = "7.5")
+    val pricePerDistance: Double,
+
+    @Schema(example = "5.5")
+    val pricePerHour: Double
 )

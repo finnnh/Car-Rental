@@ -29,7 +29,7 @@ class CarControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `getCarByID() Should Return a Car with ID 64c8c410bebeef1000d78c80`() {
-        every { carService.getCarByID(any()) } returns Car("64c8c410bebeef1000d78c80", "Audi", "A4", 5)
+        every { carService.getCarByID(any()) } returns Car("64c8c410bebeef1000d78c80", "Audi", "A4", 5, 5.0, 5.0)
 
         mockMvc.perform(MockMvcRequestBuilders.get("/cars/64c8c410bebeef1000d78c80"))
             .andExpect(status().isOk)
@@ -47,7 +47,7 @@ class CarControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `getAllCars() Should return a list of Cars`() {
-        every { carService.getAllCars() } returns listOf(Car("64c8c410bebeef1000d78c80", "Audi", "A4", 5), Car("64c8c410bebeef1000d78c81", "BMW", "M4", 4))
+        every { carService.getAllCars() } returns listOf(Car("64c8c410bebeef1000d78c80", "Audi", "A4", 5, 5.0, 5.0), Car("64c8c410bebeef1000d78c81", "BMW", "M4", 4, 5.0, 5.0))
 
         val result = mockMvc.perform(MockMvcRequestBuilders.get("/cars"))
             .andExpect(status().isOk)
@@ -60,9 +60,9 @@ class CarControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `createCar() Should return the created Car & Created Status`() {
-        every { carService.createCar(any(), any(), any()) } returns Car("64c8c410bebeef1000d78c80", "Audi", "A4", 5)
+        every { carService.createCar(any(), any(), any(), any(), any()) } returns Car("64c8c410bebeef1000d78c80", "Audi", "A4", 5, 5.0, 5.0)
 
-        val car = CarRequest("Audi", "A4", 5)
+        val car = CarRequest("Audi", "A4", 5, 5.0, 5.0)
 
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false)
         val writer = mapper.writer().withDefaultPrettyPrinter()
