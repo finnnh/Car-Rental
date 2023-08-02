@@ -1,3 +1,15 @@
 package com.finn.carrental.api.dtos
 
-class CarRequest(val brand: String, val model: String, val seats: Int)
+import io.swagger.v3.oas.annotations.media.Schema
+
+class CarRequest(
+
+    @Schema(example = "Audi")
+    val brand: String,
+
+    @Schema(example = "A4")
+    val model: String,
+
+    @Schema(example = "5")
+    val seats: Int
+)

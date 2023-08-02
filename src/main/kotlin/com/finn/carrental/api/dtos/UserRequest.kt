@@ -1,3 +1,15 @@
 package com.finn.carrental.api.dtos
 
-class UserRequest(val name: String, val lastname: String, val email: String)
+import io.swagger.v3.oas.annotations.media.Schema
+
+class UserRequest(
+
+    @Schema(example = "Bob")
+    val name: String,
+
+    @Schema(example = "Doe")
+    val lastname: String,
+
+    @Schema(example = "bob.doe@gmail.com")
+    val email: String
+)
