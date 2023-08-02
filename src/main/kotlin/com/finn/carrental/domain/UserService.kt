@@ -1,6 +1,5 @@
 package com.finn.carrental.domain
 
-import com.finn.carrental.api.dtos.UserRequest
 import com.finn.carrental.domain.exceptions.AlreadyExistsException
 import com.finn.carrental.domain.exceptions.NotFoundException
 import com.finn.carrental.domain.models.User
@@ -22,13 +21,20 @@ class UserService(private val userRepository: UserRepository) {
         return userRepository.findOneById(ObjectId(id))?.toDomain() ?: throw NotFoundException()
     }
 
-    fun createUser(userRequest: UserRequest): User? {
+    /**
+     * @param name The name of the User
+     * @param lastname The name of the User
+     * @param email The email of the User (Needs to be Unique)
+     * @return The newly created User
+     * @throws AlreadyExistsException if there is already a User with the same E-Mail
+     */
+    fun createUser(name: String, lastname: String, email: String): User? {
         try {
             return userRepository.save(
                 UserEntity(
-                    name = userRequest.name,
-                    lastname = userRequest.lastname,
-                    email = userRequest.email
+                    name = name,
+                    lastname = lastname,
+                    email = email
                 )
             ).toDomain()
         } catch (exception: DuplicateKeyException) {

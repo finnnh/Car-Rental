@@ -27,9 +27,11 @@ class UserControllerTest(@Autowired val mockMvc: MockMvc) {
     @MockkBean
     lateinit var userService: UserService
 
+    private val mapper = jacksonObjectMapper()
+
     @Test
     fun `getUserByID() Should Return a User with ID 64c8c410bebeef1000d78c80`() {
-        every { userService.getUserByID("64c8c410bebeef1000d78c80") } returns User("Finn", "64c8c410bebeef1000d78c80", "Testname", "test@gmail.com")
+        every { userService.getUserByID(any())} returns User("Finn", "64c8c410bebeef1000d78c80", "Testname", "test@gmail.com")
 
         mockMvc.perform(MockMvcRequestBuilders.get("/users/64c8c410bebeef1000d78c80"))
             .andExpect(status().isOk)
@@ -53,7 +55,6 @@ class UserControllerTest(@Autowired val mockMvc: MockMvc) {
             .andExpect(status().isOk)
             .andReturn()
 
-        val mapper = jacksonObjectMapper()
         val notes: List<User> = mapper.readValue(result.response.contentAsString)
 
         Assertions.assertThat(notes).isNotEmpty
@@ -61,10 +62,10 @@ class UserControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `createUser() Should return the created User & Created Status`() {
-        every { userService.createUser(any()) } returns User("Finn", "64c8c410bebeef1000d78c80", "Lastname", "test@gmail.com")
+        every { userService.createUser(any(), any(), any()) } returns User("Finn", "64c8c410bebeef1000d78c80", "Lastname", "test@gmail.com")
 
         val user = UserRequest("Finn", "Lastname", "test@gmail.com")
-        val mapper = ObjectMapper()
+
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false)
         val writer = mapper.writer().withDefaultPrettyPrinter()
 
@@ -80,11 +81,11 @@ class UserControllerTest(@Autowired val mockMvc: MockMvc) {
     }
 
     @Test
-    fun `createUserThatAlreadyExist() Should throw an AlreadyExistsException`() {
-        every { userService.createUser(any()) } throws AlreadyExistsException()
+    fun `createUserThatAlreadyExist() Should have HttpStatus Conflict`() {
+        every { userService.createUser(any(), any(), any()) } throws AlreadyExistsException()
 
         val user = UserRequest("Finn", "Lastname", "test@gmail.com")
-        val mapper = ObjectMapper()
+
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false)
         val writer = mapper.writer().withDefaultPrettyPrinter()
 

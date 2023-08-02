@@ -20,11 +20,10 @@ class CarServiceTest {
     fun `createCar() Should add a Car`() {
         // given
         val carService = CarService(carRepository)
-        val carRequest = CarRequest("Audi", "A4", 5)
         every { carRepository.save(any()) } returnsArgument(0)
 
         // when
-        val car = carService.createCar(carRequest)
+        val car = carService.createCar("Audi", "A4", 5)
 
         // then
         val expectedCar = Car("", "Audi", "A4", 5)
