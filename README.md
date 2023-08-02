@@ -14,7 +14,7 @@ This is an API created with Springboot in Kotlin, that I did during a 2 Week Int
 - Rent a Car for a specific time period
 - List all Users/Cars/Rentals
 - Get A User/Car/Rental by ID
-- Update User/Car/Rental
+- Swagger-Docs
 
 
 ## Documentation
