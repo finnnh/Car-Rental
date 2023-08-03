@@ -1,8 +1,8 @@
 package com.finn.carrental.api
 
-import com.finn.carrental.api.dtos.UserRequest
-import com.finn.carrental.api.dtos.UserResponse
-import com.finn.carrental.api.dtos.UserResponse.Companion.toDTO
+import com.finn.carrental.api.dtos.users.UserRequest
+import com.finn.carrental.api.dtos.users.UserResponse
+import com.finn.carrental.api.dtos.users.UserResponse.Companion.toDTO
 import com.finn.carrental.domain.UserService
 import com.finn.carrental.domain.exceptions.AlreadyExistsException
 import io.swagger.v3.oas.annotations.responses.ApiResponse

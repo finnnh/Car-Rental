@@ -12,5 +12,11 @@ class CarEntity(
     var id: ObjectId = ObjectId.get(),
     var brand: String,
     var model: String,
-    var seats: Int
+    var seats: Int,
+    var pricePerDistanceHigh: Double,
+    var pricePerDistanceModerate: Double,
+    var pricePerDistanceLow: Double,
+    var pricePerHourHigh: Double,
+    var pricePerHourModerate: Double,
+    var pricePerHourLow: Double
 )

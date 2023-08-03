@@ -1,8 +1,8 @@
 package com.finn.carrental.api
 
-import com.finn.carrental.api.dtos.RentalRequest
-import com.finn.carrental.api.dtos.RentalResponse
-import com.finn.carrental.api.dtos.RentalResponse.Companion.toDTO
+import com.finn.carrental.api.dtos.rentals.RentalRequest
+import com.finn.carrental.api.dtos.rentals.RentalResponse
+import com.finn.carrental.api.dtos.rentals.RentalResponse.Companion.toDTO
 import com.finn.carrental.domain.RentalService
 import com.finn.carrental.domain.exceptions.AlreadyRentedException
 import io.swagger.v3.oas.annotations.responses.ApiResponse

@@ -3,7 +3,7 @@ package com.finn.carrental.api
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.finn.carrental.api.dtos.UserRequest
+import com.finn.carrental.api.dtos.users.UserRequest
 import com.finn.carrental.domain.UserService
 import com.finn.carrental.domain.exceptions.AlreadyExistsException
 import com.finn.carrental.domain.models.User

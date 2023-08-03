@@ -22,17 +22,17 @@ class CarServiceTest {
         every { carRepository.save(any()) } returnsArgument(0)
 
         // when
-        val car = carService.createCar("Audi", "A4", 5)
+        val car = carService.createCar("Audi", "A4", 5, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0)
 
         // then
-        val expectedCar = Car("", "Audi", "A4", 5)
+        val expectedCar = Car("", "Audi", "A4", 5, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0)
         Assertions.assertThat(car).usingRecursiveComparison().ignoringFields("id").isEqualTo(expectedCar)
     }
 
     @Test
     fun `getAllCars() Should return multiple Cars`() {
         val carService = CarService(carRepository)
-        every { carRepository.findAll() } returns listOf(CarEntity(model = "A4", brand = "Audi", seats = 5), CarEntity(model = "M4", brand = "BMW", seats = 5))
+        every { carRepository.findAll() } returns listOf(CarEntity(model = "A4", brand = "Audi", seats = 5, pricePerDistanceHigh = 5.0, pricePerDistanceModerate = 5.0, pricePerDistanceLow = 5.0, pricePerHourHigh = 5.0, pricePerHourModerate = 5.0, pricePerHourLow = 5.0), CarEntity(model = "M4", brand = "BMW", seats = 5, pricePerDistanceHigh = 5.0, pricePerDistanceModerate = 5.0, pricePerDistanceLow = 5.0, pricePerHourHigh = 5.0, pricePerHourModerate = 5.0, pricePerHourLow = 5.0))
 
         // when
         val list = carService.getAllCars()
@@ -45,7 +45,7 @@ class CarServiceTest {
     fun `getCarByID() Should return a Car with the given ID`() {
         // given
         val carService = CarService(carRepository)
-        every { carRepository.findOneById(any()) } returns CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), "Audi", "A4", 5)
+        every { carRepository.findOneById(any()) } returns CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), "Audi", "A4", 5, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0)
 
         // when
         val car = carService.getCarByID("64c8fb032eb57e0b2626907c")

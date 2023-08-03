@@ -1,4 +1,4 @@
-package com.finn.carrental.api.dtos
+package com.finn.carrental.api.dtos.rentals
 
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDateTime
