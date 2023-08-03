@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.finn.carrental.api.dtos.RentalRequest
+import com.finn.carrental.api.dtos.rentals.RentalRequest
 import com.finn.carrental.domain.RentalService
 import com.finn.carrental.domain.exceptions.AlreadyRentedException
 import com.finn.carrental.domain.models.Car
@@ -36,7 +36,7 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
             Rental(
                 "64c8c410bebeef1000d78c80",
                 User("Finn", "64c8c410bebeef1000d78c80", "Hoffmann", "fihoffmann@web.de"),
-                Car("64c8fb032eb57e0b2626907c", "Audi", "A5", 5),
+                Car("64c8fb032eb57e0b2626907c", "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 20, 12, 0),
                 LocalDateTime.of(2023, 8, 25, 12, 0)
             )
@@ -61,7 +61,7 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
             Rental(
                 "64c8c410bebeef1000d78c80",
                 User("Finn", "64c8c410bebeef1000d78c80", "Hoffmann", "fihoffmann@web.de"),
-                Car("64c8fb032eb57e0b2626907c", "Audi", "A5", 5),
+                Car("64c8fb032eb57e0b2626907c", "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 20, 12, 0),
                 LocalDateTime.of(2023, 8, 25, 12, 0)
             ),
@@ -69,7 +69,7 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
             Rental(
                 "64c8c410bebeef1000d78c80",
                 User("Kostas", "64c8c410bebeef1000d78c80", "Lastname", "test@gmail.com"),
-                Car("64c8fb032eb57e0b2626907c", "BMW", "M5", 5),
+                Car("64c8fb032eb57e0b2626907c", "BMW", "M5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 20, 12, 0),
                 LocalDateTime.of(2023, 8, 25, 12, 0)
             )
@@ -90,7 +90,7 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
             Rental(
                 "64c8c410bebeef1000d78c80",
                 User("Finn", "64c8c410bebeef1000d78c80", "Hoffmann", "fihoffmann@web.de"),
-                Car("64c8fb032eb57e0b2626907c", "Audi", "A5", 5),
+                Car("64c8fb032eb57e0b2626907c", "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 20, 12, 0),
                 LocalDateTime.of(2023, 8, 25, 12, 0)
             )

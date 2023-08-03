@@ -13,6 +13,10 @@ class CarEntity(
     var brand: String,
     var model: String,
     var seats: Int,
-    var pricePerDistance: Double,
-    var pricePerHour: Double
+    var pricePerDistanceHigh: Double,
+    var pricePerDistanceModerate: Double,
+    var pricePerDistanceLow: Double,
+    var pricePerHourHigh: Double,
+    var pricePerHourModerate: Double,
+    var pricePerHourLow: Double
 )

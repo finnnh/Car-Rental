@@ -1,7 +1,9 @@
-package com.finn.carrental.api.dtos
+package com.finn.carrental.api.dtos.rentals
 
-import com.finn.carrental.api.dtos.CarResponse.Companion.toDTO
-import com.finn.carrental.api.dtos.UserResponse.Companion.toDTO
+import com.finn.carrental.api.dtos.cars.CarResponse
+import com.finn.carrental.api.dtos.cars.CarResponse.Companion.toDTO
+import com.finn.carrental.api.dtos.users.UserResponse
+import com.finn.carrental.api.dtos.users.UserResponse.Companion.toDTO
 import com.finn.carrental.domain.models.Rental
 import io.swagger.v3.oas.annotations.media.Schema
 

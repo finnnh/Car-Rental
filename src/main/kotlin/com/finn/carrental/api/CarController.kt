@@ -1,8 +1,8 @@
 package com.finn.carrental.api
 
-import com.finn.carrental.api.dtos.CarRequest
-import com.finn.carrental.api.dtos.CarResponse
-import com.finn.carrental.api.dtos.CarResponse.Companion.toDTO
+import com.finn.carrental.api.dtos.cars.CarRequest
+import com.finn.carrental.api.dtos.cars.CarResponse
+import com.finn.carrental.api.dtos.cars.CarResponse.Companion.toDTO
 import com.finn.carrental.domain.CarService
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
@@ -56,6 +56,17 @@ class CarController(val carService: CarService) {
         ]
     )
     fun createCar(@RequestBody request: CarRequest): ResponseEntity<CarResponse> {
-        return ResponseEntity(carService.createCar(request.brand, request.model, request.seats, request.pricePerDistance, request.pricePerHour).toDTO(), HttpStatus.CREATED)
+        return ResponseEntity(
+            carService.createCar(
+                request.brand, request.model, request.seats,
+                request.pricePerDistanceHigh,
+                request.pricePerDistanceModerate,
+                request.pricePerDistanceLow,
+                request.pricePerHourHigh,
+                request.pricePerHourModerate,
+                request.pricePerHourLow
+            ).toDTO(),
+            HttpStatus.CREATED
+        )
     }
 }
