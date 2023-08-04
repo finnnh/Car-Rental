@@ -16,8 +16,6 @@ class PriceCalculatorService(private val carRepository: CarRepository, @Value("\
      * @return The price of the Car as a Double
      */
     fun calculatePrice(carId: String, hours: Int, km: Int): Double {
-        println(pricingType)
-
         return when (pricingType) {
             "steps" -> calculatePriceForCarSteps(carId, hours, km)
             "linear" -> calculatePriceForCarLinear(carId, hours, km)
