@@ -43,6 +43,7 @@ class UserController(val userService: UserService) {
             ApiResponse(responseCode = "404", description = "No User with this ID")
         ]
     )
+
     fun getUserByID(@PathVariable("id") id: String): ResponseEntity<UserResponse> {
         val user = userService.getUserByID(id)?.toDTO() ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
 

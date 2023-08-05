@@ -1,4 +1,4 @@
-package com.finn.carrental.api.dtos
+package com.finn.carrental.api
 
 import com.finn.carrental.api.dtos.pricing.BillingRequest
 import com.finn.carrental.domain.BillingGeneratorService
