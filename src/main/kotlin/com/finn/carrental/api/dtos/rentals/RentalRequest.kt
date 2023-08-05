@@ -15,5 +15,11 @@ class RentalRequest(
     val start: LocalDateTime,
 
     @Schema(example = "2023-08-08T06:28:53.000Z")
-    val end: LocalDateTime
+    val end: LocalDateTime,
+
+    @Schema(example = "48")
+    val hours: Int,
+
+    @Schema(example = "300")
+    val km: Int
 )

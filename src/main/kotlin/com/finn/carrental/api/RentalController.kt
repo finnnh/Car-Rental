@@ -59,7 +59,7 @@ class RentalController(val rentalService: RentalService) {
     )
     fun createRental(@RequestBody request: RentalRequest): ResponseEntity<RentalResponse> {
         try {
-            return ResponseEntity(rentalService.createRental(request.userId, request.carId, request.start, request.end).toDTO(), HttpStatus.CREATED)
+            return ResponseEntity(rentalService.createRental(request.userId, request.carId, request.start, request.end, request.hours, request.km).toDTO(), HttpStatus.CREATED)
         } catch (exception: AlreadyRentedException) {
             throw ResponseStatusException(HttpStatus.CONFLICT, "Car Already Rented")
         }

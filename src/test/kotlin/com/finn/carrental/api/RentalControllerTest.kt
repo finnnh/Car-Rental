@@ -38,7 +38,9 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
                 User("Finn", "64c8c410bebeef1000d78c80", "Hoffmann", "fihoffmann@web.de"),
                 Car("64c8fb032eb57e0b2626907c", "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 20, 12, 0),
-                LocalDateTime.of(2023, 8, 25, 12, 0)
+                LocalDateTime.of(2023, 8, 25, 12, 0),
+                48,
+                300
             )
 
         mockMvc.perform(MockMvcRequestBuilders.get("/rentals/64c8c410bebeef1000d78c80"))
@@ -63,7 +65,9 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
                 User("Finn", "64c8c410bebeef1000d78c80", "Hoffmann", "fihoffmann@web.de"),
                 Car("64c8fb032eb57e0b2626907c", "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 20, 12, 0),
-                LocalDateTime.of(2023, 8, 25, 12, 0)
+                LocalDateTime.of(2023, 8, 25, 12, 0),
+                48,
+                300
             ),
 
             Rental(
@@ -71,7 +75,9 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
                 User("Kostas", "64c8c410bebeef1000d78c80", "Lastname", "test@gmail.com"),
                 Car("64c8fb032eb57e0b2626907c", "BMW", "M5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 20, 12, 0),
-                LocalDateTime.of(2023, 8, 25, 12, 0)
+                LocalDateTime.of(2023, 8, 25, 12, 0),
+                48,
+                300
             )
         )
 
@@ -86,20 +92,24 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `createRental() Should return the created Rental & Created Status`() {
-        every { rentalService.createRental(any(), any(), any(), any()) } returns
+        every { rentalService.createRental(any(), any(), any(), any(), any(), any()) } returns
             Rental(
                 "64c8c410bebeef1000d78c80",
                 User("Finn", "64c8c410bebeef1000d78c80", "Hoffmann", "fihoffmann@web.de"),
                 Car("64c8fb032eb57e0b2626907c", "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 20, 12, 0),
-                LocalDateTime.of(2023, 8, 25, 12, 0)
+                LocalDateTime.of(2023, 8, 25, 12, 0),
+                48,
+                300
             )
 
         val rental = RentalRequest(
             "64c8c410bebeef1000d78c80",
             "64c8fb032eb57e0b2626907c",
             LocalDateTime.of(2023, 8, 20, 12, 0),
-            LocalDateTime.of(2023, 8, 25, 12, 0)
+            LocalDateTime.of(2023, 8, 25, 12, 0),
+            48,
+            300
         )
 
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false)
@@ -118,13 +128,15 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `createRentalInABookedTimeframe() Should HttpStatus Conflict`() {
-        every { rentalService.createRental(any(), any(), any(), any()) } throws AlreadyRentedException()
+        every { rentalService.createRental(any(), any(), any(), any(), any(), any()) } throws AlreadyRentedException()
 
         val rental = RentalRequest(
             "64c8c410bebeef1000d78c80",
             "64c8fb032eb57e0b2626907c",
             LocalDateTime.of(2023, 8, 20, 12, 0),
-            LocalDateTime.of(2023, 8, 25, 12, 0)
+            LocalDateTime.of(2023, 8, 25, 12, 0),
+            48,
+            300
         )
 
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false)

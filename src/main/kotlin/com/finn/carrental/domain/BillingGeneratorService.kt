@@ -11,36 +11,55 @@ import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import jakarta.servlet.http.HttpServletResponse
 import org.bson.types.ObjectId
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.util.stream.Stream
+import javax.xml.parsers.DocumentBuilderFactory
 
 
 @Service
-class BillingGeneratorService(val userRepository: UserRepository, val carRepository: CarRepository, val rentalRepository: RentalRepository) {
-    fun generateBillingPDF(response: HttpServletResponse, userId: String, month: Int, year: Int) {
+class BillingGeneratorService(val userRepository: UserRepository, val rentalRepository: RentalRepository, val priceCalculatorService: PriceCalculatorService) {
+    fun generateBillingPDF(response: HttpServletResponse, userId: String, billingMonth: Int, billingYear: Int) {
         val user = userRepository.findOneById(ObjectId(userId)) ?: throw NotFoundException()
         val rentals = rentalRepository.findByUserEntity(user)
 
         val document = Document()
         PdfWriter.getInstance(document, response.outputStream)
 
+        document.addAuthor("Car-Rantal-Company")
+        document.addCreationDate()
+        document.addTitle("Billing")
+        document.setPageSize(PageSize.LETTER)
+
         document.open()
-        val font = FontFactory.getFont(FontFactory.COURIER)
-        val chunk = Chunk("Test", font)
-        document.add(chunk)
 
         val table = PdfPTable(4)
-
         addTableHeader(table)
-
-        println(rentals.size)
-
+        var finalPrice = 0.0
         rentals.forEach {
-            addRows(table, it.carEntity.brand + it.carEntity.model, it.carEntity.pricePerDistanceHigh, it.carEntity.pricePerHourHigh)
+            if(it.start.year == billingYear && it.start.month.value == billingMonth) {
+                var pricePerHour = 0.0
+                var pricePerKM = 0.0
+
+                if(priceCalculatorService.pricingType == "linear") {
+                    pricePerHour = priceCalculatorService.calculatePriceLinearHour(it.carEntity, it.hours)
+                    pricePerKM = priceCalculatorService.calculatePriceLinearKM(it.carEntity, it.km)
+                } else {
+                    pricePerHour = priceCalculatorService.calculatePriceStepsHour(it.carEntity, it.hours)
+                    pricePerKM = priceCalculatorService.calculatePriceStepsKM(it.carEntity, it.km)
+                }
+
+                val totalPrice = pricePerHour + pricePerKM
+
+                addRow(table, it.carEntity.brand + "-" + it.carEntity.model, pricePerKM.toString(), pricePerHour.toString(), totalPrice.toString())
+                finalPrice+=totalPrice
+            }
         }
 
-        document.add(table)
+        addRow(table, "", "", "", "")
+        addRow(table, "Total", "", "", finalPrice.toString())
 
+        document.add(table)
         document.close()
     }
 
@@ -54,11 +73,11 @@ class BillingGeneratorService(val userRepository: UserRepository, val carReposit
         }
     }
 
-    private fun addRows(table: PdfPTable, car: String, priceHour: Double, priceKm: Double) {
+    private fun addRow(table: PdfPTable, car: String, priceHour: String, priceKm: String, total: String) {
         table.addCell(car)
-        table.addCell(priceHour.toString())
-        table.addCell(priceKm.toString())
-        table.addCell((priceKm + priceHour).toString())
+        table.addCell(priceHour)
+        table.addCell(priceKm)
+        table.addCell(total)
     }
 
 }

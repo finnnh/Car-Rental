@@ -32,7 +32,7 @@ class RentalService(private val rentalRepository: RentalRepository, private val 
      * @throws AlreadyRentedException If The Car is already Booked during the specific time period
      * @return The newly created Rent
      */
-    fun createRental(userId: String, carId: String, start: LocalDateTime, end: LocalDateTime): Rental {
+    fun createRental(userId: String, carId: String, start: LocalDateTime, end: LocalDateTime, hours: Int, km: Int): Rental {
         val carEntity = carRepository.findOneById(ObjectId(carId)) ?: throw NotFoundException()
 
         val rentOfCarList = rentalRepository.findByCarEntity(carEntity)
@@ -53,7 +53,9 @@ class RentalService(private val rentalRepository: RentalRepository, private val 
                 userEntity = userEntity,
                 carEntity = carEntity,
                 start = start,
-                end = end
+                end = end,
+                hours = hours,
+                km = km
             )
         ).toDomain()
     }
