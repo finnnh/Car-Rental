@@ -2,7 +2,6 @@ package com.finn.carrental.api
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.finn.carrental.domain.BillingGeneratorService
-import com.finn.carrental.domain.CarService
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.junit.jupiter.api.Assertions.*
