@@ -19,12 +19,18 @@ class RentalResponse(
     val start: String,
 
     @Schema(example = "2023-08-07T06:28:53.000Z")
-    val end: String
+    val end: String,
+
+    @Schema(example = "48")
+    val hours: Int,
+
+    @Schema(example = "300")
+    val km: Int
 ) {
 
     companion object {
         fun Rental.toDTO(): RentalResponse {
-            return RentalResponse(this.id, this.user.toDTO(), this.car.toDTO(), this.start.toString(), this.end.toString())
+            return RentalResponse(this.id, this.user.toDTO(), this.car.toDTO(), this.start.toString(), this.end.toString(), this.hours, this.km)
         }
     }
 }

@@ -2,11 +2,11 @@ package com.finn.carrental.domain.models
 
 import com.finn.carrental.persistence.entities.UserEntity
 
-class User(val name: String, val id: String, val lastname: String, val email: String) {
+class User(val id: String, val name: String, val lastname: String, val email: String) {
 
     companion object {
         fun UserEntity.toDomain(): User {
-            return User(this.name, this.id.toString(), this.lastname, this.email)
+            return User(this.id.toString(), this.name, this.lastname, this.email)
         }
     }
 }

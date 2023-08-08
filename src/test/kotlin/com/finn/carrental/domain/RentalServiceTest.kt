@@ -39,19 +39,23 @@ class RentalServiceTest {
             "64c8c410bebeef1000d78c80",
             "64c8fb032eb57e0b2626907c",
             LocalDateTime.of(2023, 8, 20, 12, 0),
-            LocalDateTime.of(2023, 8, 25, 12, 0)
+            LocalDateTime.of(2023, 8, 25, 12, 0),
+            48,
+            300
         )
 
         // then
         val expectedRental = Rental(
             "64c8c410bebeef1000d78c80",
-            User("Finn", "64c8c410bebeef1000d78c80", "Hoffmann", "fihoffmann@web.de"),
+            User("64c8c410bebeef1000d78c80", "Finn", "Hoffmann", "fihoffmann@web.de"),
             Car("64c8fb032eb57e0b2626907c", "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
             LocalDateTime.of(2023, 8, 20, 12, 0),
-            LocalDateTime.of(2023, 8, 25, 12, 0)
+            LocalDateTime.of(2023, 8, 25, 12, 0),
+            48,
+            300
         )
 
-        Assertions.assertThat(rental).usingRecursiveComparison().ignoringFields("id").isEqualTo(expectedRental)
+        Assertions.assertThat(rental).usingRecursiveComparison().ignoringFields("id", "pricePerDistanceHigh", "pricePerDistanceModerate", "pricePerDistanceLow", "pricePerHourHigh", "pricePerHourModerate", "pricePerHourLow").isEqualTo(expectedRental)
     }
 
     @Test
@@ -67,7 +71,9 @@ class RentalServiceTest {
                 UserEntity(ObjectId("64c8c410bebeef1000d78c80"), "Finn", "Hoffmann", "fihoffmann@web.de"),
                 CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), "Audi", "A4", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 20, 12, 0),
-                LocalDateTime.of(2023, 8, 25, 12, 0)
+                LocalDateTime.of(2023, 8, 25, 12, 0),
+                48,
+                300
             )
         )
 
@@ -78,7 +84,9 @@ class RentalServiceTest {
                 "64c8c410bebeef1000d78c80",
                 "64c8fb032eb57e0b2626907c",
                 LocalDateTime.of(2023, 8, 21, 12, 0),
-                LocalDateTime.of(2023, 8, 23, 12, 0)
+                LocalDateTime.of(2023, 8, 23, 12, 0),
+                48,
+                300
             )
         }
     }
@@ -93,7 +101,9 @@ class RentalServiceTest {
                 UserEntity(ObjectId("64c8c410bebeef1000d78c80"), "Finn", "Hoffmann", "fihoffmann@web.de"),
                 CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), "Audi", "A4", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 20, 12, 0),
-                LocalDateTime.of(2023, 8, 25, 12, 0)
+                LocalDateTime.of(2023, 8, 25, 12, 0),
+                48,
+                300
             ),
 
             RentalEntity(
@@ -101,7 +111,9 @@ class RentalServiceTest {
                 UserEntity(ObjectId("64c8c410bebeef1000d78c80"), "Kostas", "Lastname", "test@web.de"),
                 CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), "Audi", "A4", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 10, 12, 0),
-                LocalDateTime.of(2023, 8, 15, 12, 0)
+                LocalDateTime.of(2023, 8, 15, 12, 0),
+                48,
+                300
             )
         )
 
@@ -121,7 +133,9 @@ class RentalServiceTest {
             UserEntity(ObjectId("64c8c410bebeef1000d78c80"), "Finn", "Hoffmann", "fihoffmann@web.de"),
             CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), "Audi", "A4", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
             LocalDateTime.of(2023, 8, 20, 12, 0),
-            LocalDateTime.of(2023, 8, 25, 12, 0)
+            LocalDateTime.of(2023, 8, 25, 12, 0),
+            48,
+            300
         )
 
         // when

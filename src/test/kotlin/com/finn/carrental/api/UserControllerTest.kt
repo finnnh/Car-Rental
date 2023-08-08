@@ -30,7 +30,7 @@ class UserControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `getUserByID() Should Return a User with ID 64c8c410bebeef1000d78c80`() {
-        every { userService.getUserByID(any()) } returns User("Finn", "64c8c410bebeef1000d78c80", "Testname", "test@gmail.com")
+        every { userService.getUserByID(any()) } returns User("64c8c410bebeef1000d78c80", "Finn", "Testname", "test@gmail.com")
 
         mockMvc.perform(MockMvcRequestBuilders.get("/users/64c8c410bebeef1000d78c80"))
             .andExpect(status().isOk)
@@ -48,7 +48,7 @@ class UserControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `getAllUsers() Should return a list of Users`() {
-        every { userService.getAllUsers() } returns listOf(User("Finn", "64c8c410bebeef1000d78c80", "Lastname", "test@gmail.com"), User("Kostas", "64c8c410bebeef1000d78c81", "Lastname", "test1@gmail.com"))
+        every { userService.getAllUsers() } returns listOf(User("64c8c410bebeef1000d78c80", "Finn", "Lastname", "test@gmail.com"), User("Kostas", "64c8c410bebeef1000d78c81", "Lastname", "test1@gmail.com"))
 
         val result = mockMvc.perform(MockMvcRequestBuilders.get("/users"))
             .andExpect(status().isOk)
@@ -61,7 +61,7 @@ class UserControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `createUser() Should return the created User & Created Status`() {
-        every { userService.createUser(any(), any(), any()) } returns User("Finn", "64c8c410bebeef1000d78c80", "Lastname", "test@gmail.com")
+        every { userService.createUser(any(), any(), any()) } returns User("64c8c410bebeef1000d78c80", "Finn", "Lastname", "test@gmail.com")
 
         val user = UserRequest("Finn", "Lastname", "test@gmail.com")
 

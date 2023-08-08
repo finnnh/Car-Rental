@@ -2,6 +2,7 @@ package com.finn.carrental.domain
 
 import com.finn.carrental.domain.exceptions.NotFoundException
 import com.finn.carrental.persistence.CarRepository
+import com.finn.carrental.persistence.entities.CarEntity
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -30,19 +31,8 @@ class PriceCalculatorService(private val carRepository: CarRepository, @Value("\
 
         var finalPrice = 0.0
 
-        for (i in 1..hours) {
-            val linear = linearFunction(i.toDouble(), -0.1, car.pricePerDistanceHigh)
-            val value = if (linear > 1) linear else 1.0
-
-            finalPrice += value
-        }
-
-        for (i in 1..km) {
-            val linear = linearFunction(i.toDouble(), -0.1, car.pricePerHourHigh)
-            val value = if (linear > 1) linear else 1.0
-
-            finalPrice += value
-        }
+        finalPrice += calculatePriceLinearHour(car, hours)
+        finalPrice += calculatePriceLinearKM(car, km)
 
         return finalPrice
     }
@@ -54,6 +44,40 @@ class PriceCalculatorService(private val carRepository: CarRepository, @Value("\
     fun calculatePriceForCarSteps(carId: String, hours: Int, km: Int): Double {
         val car = carRepository.findOneById(ObjectId(carId)) ?: throw NotFoundException()
 
+        var finalPrice = 0.0
+        finalPrice += calculatePriceStepsHour(car, hours)
+        finalPrice += calculatePriceStepsKM(car, km)
+
+        return finalPrice
+    }
+
+    fun calculatePriceStepsHour(car: CarEntity, hours: Int): Double {
+        var finalPrice = 0.0
+
+        var hoursLeft = hours
+
+        if (hours in 0..8) {
+            finalPrice += car.pricePerHourHigh * hoursLeft
+            hoursLeft = 0
+        } else if (hoursLeft > 8) {
+            finalPrice += car.pricePerHourHigh * 8
+            hoursLeft -= 8
+        }
+
+        if (hours in 0..8) {
+            finalPrice += car.pricePerHourModerate * hoursLeft
+            hoursLeft = 0
+        } else if (hoursLeft > 48) {
+            finalPrice += car.pricePerHourModerate * 48
+            hoursLeft -= 48
+        }
+
+        if (hours > 0) finalPrice += car.pricePerHourLow * hoursLeft
+
+        return finalPrice
+    }
+
+    fun calculatePriceStepsKM(car: CarEntity, km: Int): Double {
         var finalPrice = 0.0
         var kmLeft = km
 
@@ -75,25 +99,31 @@ class PriceCalculatorService(private val carRepository: CarRepository, @Value("\
 
         if (kmLeft > 0) finalPrice += car.pricePerDistanceLow * kmLeft
 
-        var hoursLeft = hours
+        return finalPrice
+    }
 
-        if (hours in 0..8) {
-            finalPrice += car.pricePerHourHigh * hoursLeft
-            hoursLeft = 0
-        } else if (hoursLeft > 8) {
-            finalPrice += car.pricePerHourHigh * 8
-            hoursLeft -= 8
+    fun calculatePriceLinearKM(car: CarEntity, km: Int): Double {
+        var finalPrice = 0.0
+
+        for (i in 1..km) {
+            val linear = linearFunction(i.toDouble(), -0.1, car.pricePerHourHigh)
+            val value = if (linear > 1) linear else 1.0
+
+            finalPrice += value
         }
 
-        if (hours in 0..8) {
-            finalPrice += car.pricePerHourModerate * hoursLeft
-            hoursLeft = 0
-        } else if (hoursLeft > 48) {
-            finalPrice += car.pricePerHourModerate * 48
-            hoursLeft -= 48
-        }
+        return finalPrice
+    }
 
-        if (hours > 0) finalPrice += car.pricePerHourLow * hoursLeft
+    fun calculatePriceLinearHour(car: CarEntity, hours: Int): Double {
+        var finalPrice = 0.0
+
+        for (i in 1..hours) {
+            val linear = linearFunction(i.toDouble(), -0.1, car.pricePerDistanceHigh)
+            val value = if (linear > 1) linear else 1.0
+
+            finalPrice += value
+        }
 
         return finalPrice
     }

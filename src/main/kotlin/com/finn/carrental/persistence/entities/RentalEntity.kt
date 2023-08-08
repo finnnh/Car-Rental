@@ -17,5 +17,7 @@ class RentalEntity(
     @DocumentReference
     var carEntity: CarEntity,
     var start: LocalDateTime = LocalDateTime.now(),
-    var end: LocalDateTime
+    var end: LocalDateTime,
+    var hours: Int,
+    var km: Int
 )
