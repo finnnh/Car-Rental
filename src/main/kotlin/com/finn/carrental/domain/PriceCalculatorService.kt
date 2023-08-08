@@ -45,13 +45,13 @@ class PriceCalculatorService(private val carRepository: CarRepository, @Value("\
         val car = carRepository.findOneById(ObjectId(carId)) ?: throw NotFoundException()
 
         var finalPrice = 0.0
-        finalPrice+=calculatePriceStepsHour(car, hours)
-        finalPrice+=calculatePriceStepsKM(car, km)
+        finalPrice += calculatePriceStepsHour(car, hours)
+        finalPrice += calculatePriceStepsKM(car, km)
 
         return finalPrice
     }
 
-    fun calculatePriceStepsHour (car: CarEntity, hours: Int): Double {
+    fun calculatePriceStepsHour(car: CarEntity, hours: Int): Double {
         var finalPrice = 0.0
 
         var hoursLeft = hours
@@ -77,7 +77,7 @@ class PriceCalculatorService(private val carRepository: CarRepository, @Value("\
         return finalPrice
     }
 
-    fun calculatePriceStepsKM (car: CarEntity, km: Int): Double {
+    fun calculatePriceStepsKM(car: CarEntity, km: Int): Double {
         var finalPrice = 0.0
         var kmLeft = km
 
@@ -127,5 +127,4 @@ class PriceCalculatorService(private val carRepository: CarRepository, @Value("\
 
         return finalPrice
     }
-
 }

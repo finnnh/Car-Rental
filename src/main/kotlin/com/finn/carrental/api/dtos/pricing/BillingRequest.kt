@@ -11,4 +11,5 @@ class BillingRequest(
     val month: Int,
 
     @Schema(example = "2023")
-    val year: Int)
+    val year: Int
+)

@@ -1,30 +1,30 @@
 package com.finn.carrental.domain
 
 import com.finn.carrental.domain.exceptions.NotFoundException
-import com.finn.carrental.persistence.CarRepository
 import com.finn.carrental.persistence.RentalRepository
 import com.finn.carrental.persistence.UserRepository
-import com.finn.carrental.persistence.entities.UserEntity
-import com.itextpdf.text.*
+import com.itextpdf.text.BaseColor
+import com.itextpdf.text.Document
+import com.itextpdf.text.PageSize
+import com.itextpdf.text.Phrase
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
-import jakarta.servlet.http.HttpServletResponse
 import org.bson.types.ObjectId
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import java.io.ByteArrayOutputStream
 import java.util.stream.Stream
-import javax.xml.parsers.DocumentBuilderFactory
-
 
 @Service
 class BillingGeneratorService(val userRepository: UserRepository, val rentalRepository: RentalRepository, val priceCalculatorService: PriceCalculatorService) {
-    fun generateBillingPDF(response: HttpServletResponse, userId: String, billingMonth: Int, billingYear: Int) {
+    fun generateBillingPDF(userId: String, billingMonth: Int, billingYear: Int): ByteArray {
         val user = userRepository.findOneById(ObjectId(userId)) ?: throw NotFoundException()
         val rentals = rentalRepository.findByUserEntity(user)
 
         val document = Document()
-        PdfWriter.getInstance(document, response.outputStream)
+        val byteArrayOutputStream = ByteArrayOutputStream()
+
+        PdfWriter.getInstance(document, byteArrayOutputStream)
 
         document.addAuthor("Car-Rantal-Company")
         document.addCreationDate()
@@ -37,11 +37,11 @@ class BillingGeneratorService(val userRepository: UserRepository, val rentalRepo
         addTableHeader(table)
         var finalPrice = 0.0
         rentals.forEach {
-            if(it.start.year == billingYear && it.start.month.value == billingMonth) {
+            if (it.start.year == billingYear && it.start.month.value == billingMonth) {
                 var pricePerHour = 0.0
                 var pricePerKM = 0.0
 
-                if(priceCalculatorService.pricingType == "linear") {
+                if (priceCalculatorService.pricingType == "linear") {
                     pricePerHour = priceCalculatorService.calculatePriceLinearHour(it.carEntity, it.hours)
                     pricePerKM = priceCalculatorService.calculatePriceLinearKM(it.carEntity, it.km)
                 } else {
@@ -51,8 +51,14 @@ class BillingGeneratorService(val userRepository: UserRepository, val rentalRepo
 
                 val totalPrice = pricePerHour + pricePerKM
 
-                addRow(table, it.carEntity.brand + "-" + it.carEntity.model, pricePerKM.toString(), pricePerHour.toString(), totalPrice.toString())
-                finalPrice+=totalPrice
+                addRow(
+                    table,
+                    it.carEntity.brand + "-" + it.carEntity.model,
+                    pricePerKM.toString(),
+                    pricePerHour.toString(),
+                    totalPrice.toString()
+                )
+                finalPrice += totalPrice
             }
         }
 
@@ -61,6 +67,8 @@ class BillingGeneratorService(val userRepository: UserRepository, val rentalRepo
 
         document.add(table)
         document.close()
+
+        return byteArrayOutputStream.toByteArray()
     }
 
     fun addTableHeader(table: PdfPTable) {
@@ -79,5 +87,4 @@ class BillingGeneratorService(val userRepository: UserRepository, val rentalRepo
         table.addCell(priceKm)
         table.addCell(total)
     }
-
 }
