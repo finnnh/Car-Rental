@@ -10,10 +10,10 @@ import org.springframework.data.mongodb.core.mapping.Document
 class LocationEntity (
 
     @Id
-    var id: ObjectId = ObjectId.get(),
-    var houseNumber: Int,
-    var street: String,
-    var postalCode: Int,
-    var city: String
+    val id: ObjectId = ObjectId.get(),
+    val houseNumber: Int,
+    val street: String,
+    val postalCode: Int,
+    val city: String
 
 )
