@@ -9,5 +9,4 @@ class Location(val id: String, val houseNumber: Int, val street: String, val pos
             return Location(this.id.toString(), this.houseNumber, this.street, this.postalCode, this.city)
         }
     }
-
 }

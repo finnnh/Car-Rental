@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document("locations")
 @TypeAlias("LocationEntity")
-class LocationEntity (
+class LocationEntity(
 
     @Id
     val id: ObjectId = ObjectId.get(),

@@ -9,7 +9,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
@@ -22,30 +28,31 @@ class LocationController(val locationService: LocationService) {
         return ResponseEntity(locationService.getAllLocations().map { location -> location.toDTO() }, HttpStatus.OK)
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "Successful"),
-            ApiResponse(responseCode = "404", description = "No Location with this ID")
+            ApiResponse(responseCode = "404", description = "No Location Found")
         ]
     )
-    fun getLocationByID(@PathVariable("id") id: String): ResponseEntity<LocationResponse> {
+    fun getLocationById(@PathVariable("id") id: String): ResponseEntity<LocationResponse> {
         val location = locationService.getLocationById(id)?.toDTO() ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Location not found")
 
         return ResponseEntity(location, HttpStatus.OK)
     }
 
-    @GetMapping("/{city}")
+    @GetMapping("/city/{city}")
     @ResponseStatus(HttpStatus.OK)
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "Successful"),
-            ApiResponse(responseCode = "404", description = "No Location in this City")
+            ApiResponse(responseCode = "404", description = "No Location Found")
         ]
     )
-    fun getLocationByParam(@PathVariable("city") searchType: String, @PathVariable("city") city: String): ResponseEntity<LocationResponse> {
-        val location = locationService.getLocationByCity(city)?.toDTO() ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Location not found")
+    fun getLocationByCity(@PathVariable("city") city: String): ResponseEntity<List<LocationResponse>> {
+        val location = locationService.getLocationsByCity(city).map { it.toDTO() }
+        if (location.isEmpty()) throw ResponseStatusException(HttpStatus.NOT_FOUND, "Location not found")
 
         return ResponseEntity(location, HttpStatus.OK)
     }
@@ -68,5 +75,4 @@ class LocationController(val locationService: LocationService) {
             HttpStatus.CREATED
         )
     }
-
 }

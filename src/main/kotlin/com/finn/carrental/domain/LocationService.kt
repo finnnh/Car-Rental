@@ -17,7 +17,8 @@ class LocationService(private val locationRepository: LocationRepository) {
                 houseNumber = houseNumber,
                 street = street,
                 postalCode = postalCode,
-                city = city)
+                city = city
+            )
         ).toDomain()
     }
 
@@ -29,8 +30,7 @@ class LocationService(private val locationRepository: LocationRepository) {
         return locationRepository.findOneById(ObjectId(id))?.toDomain() ?: throw NotFoundException()
     }
 
-    fun getLocationByCity(city: String): Location? {
-        return locationRepository.findOneByCity(city)?.toDomain() ?: throw NotFoundException()
+    fun getLocationsByCity(city: String): List<Location> {
+        return locationRepository.findByCity(city).map { it.toDomain() }
     }
-
 }

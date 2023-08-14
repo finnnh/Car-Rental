@@ -6,8 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository
 
 interface LocationRepository : MongoRepository<LocationEntity, String> {
     fun findOneById(id: ObjectId): LocationEntity?
-    fun findOneByCity(city: String): LocationEntity?
+    fun findByCity(city: String): List<LocationEntity>
 
     override fun deleteAll()
-
 }

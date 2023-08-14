@@ -2,7 +2,7 @@ package com.finn.carrental.api.dtos.locations
 
 import io.swagger.v3.oas.annotations.media.Schema
 
-class LocationRequest (
+class LocationRequest(
 
     @Schema(example = "5")
     val houseNumber: Int,
