@@ -2,6 +2,7 @@ package com.finn.carrental.domain
 
 import com.finn.carrental.persistence.CarRepository
 import com.finn.carrental.persistence.entities.CarEntity
+import com.finn.carrental.persistence.entities.LocationEntity
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions
@@ -20,6 +21,7 @@ class PriceCalculatorServiceTest {
         every { carRepository.findOneById(any()) } returns
             CarEntity(
                 ObjectId("64ca5e14df5d3d4585ad2fa2"),
+                LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"),
                 "Audi",
                 "A4",
                 5,
@@ -45,7 +47,7 @@ class PriceCalculatorServiceTest {
 
         every { carRepository.findOneById(any()) } returns
             CarEntity(
-                ObjectId("64ca5e14df5d3d4585ad2fa2"),
+                ObjectId("64ca5e14df5d3d4585ad2fa2"), LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"),
                 "Audi",
                 "A4",
                 5,
@@ -71,7 +73,7 @@ class PriceCalculatorServiceTest {
 
         every { carRepository.findOneById(any()) } returns
             CarEntity(
-                ObjectId("64ca5e14df5d3d4585ad2fa2"),
+                ObjectId("64ca5e14df5d3d4585ad2fa2"), LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"),
                 "Audi",
                 "A4",
                 5,
@@ -97,7 +99,7 @@ class PriceCalculatorServiceTest {
 
         every { carRepository.findOneById(any()) } returns
             CarEntity(
-                ObjectId("64ca5e14df5d3d4585ad2fa2"),
+                ObjectId("64ca5e14df5d3d4585ad2fa2"), LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"),
                 "Audi",
                 "A4",
                 5,
@@ -123,7 +125,7 @@ class PriceCalculatorServiceTest {
 
         every { carRepository.findOneById(any()) } returns
             CarEntity(
-                ObjectId("64ca5e14df5d3d4585ad2fa2"),
+                ObjectId("64ca5e14df5d3d4585ad2fa2"), LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"),
                 "Audi",
                 "A4",
                 5,
@@ -149,7 +151,7 @@ class PriceCalculatorServiceTest {
 
         every { carRepository.findOneById(any()) } returns
             CarEntity(
-                ObjectId("64ca5e14df5d3d4585ad2fa2"),
+                ObjectId("64ca5e14df5d3d4585ad2fa2"), LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"),
                 "Audi",
                 "A4",
                 5,

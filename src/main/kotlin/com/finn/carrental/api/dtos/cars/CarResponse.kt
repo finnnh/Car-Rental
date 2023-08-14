@@ -1,5 +1,7 @@
 package com.finn.carrental.api.dtos.cars
 
+import com.finn.carrental.api.dtos.locations.LocationResponse
+import com.finn.carrental.api.dtos.locations.LocationResponse.Companion.toDTO
 import com.finn.carrental.domain.models.Car
 import io.swagger.v3.oas.annotations.media.Schema
 
@@ -7,6 +9,8 @@ class CarResponse(
 
     @Schema(example = "64c8c410bebeef1000d78c80")
     val id: String,
+
+    val location: LocationResponse,
 
     @Schema(example = "Audi")
     val brand: String,
@@ -39,7 +43,7 @@ class CarResponse(
     companion object {
         fun Car.toDTO(): CarResponse {
             return CarResponse(
-                this.id, this.brand, this.model, this.seats, this.pricePerDistanceHigh, this.pricePerDistanceModerate, this.pricePerDistanceLow,
+                this.id, this.location.toDTO(), this.brand, this.model, this.seats, this.pricePerDistanceHigh, this.pricePerDistanceModerate, this.pricePerDistanceLow,
                 this.pricePerHourHigh, this.pricePerHourModerate, this.pricePerHourLow
             )
         }

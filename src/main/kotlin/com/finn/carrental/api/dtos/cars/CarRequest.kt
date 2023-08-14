@@ -4,6 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 class CarRequest(
 
+    @Schema(example = "64d4b15e0632c87bd89d3512")
+    val locationId: String,
+
     @Schema(example = "Audi")
     val brand: String,
 

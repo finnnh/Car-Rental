@@ -3,12 +3,14 @@ package com.finn.carrental.domain
 import com.finn.carrental.domain.exceptions.AlreadyRentedException
 import com.finn.carrental.domain.exceptions.NotFoundException
 import com.finn.carrental.domain.models.Car
+import com.finn.carrental.domain.models.Location
 import com.finn.carrental.domain.models.Rental
 import com.finn.carrental.domain.models.User
 import com.finn.carrental.persistence.CarRepository
 import com.finn.carrental.persistence.RentalRepository
 import com.finn.carrental.persistence.UserRepository
 import com.finn.carrental.persistence.entities.CarEntity
+import com.finn.carrental.persistence.entities.LocationEntity
 import com.finn.carrental.persistence.entities.RentalEntity
 import com.finn.carrental.persistence.entities.UserEntity
 import io.mockk.every
@@ -30,7 +32,7 @@ class RentalServiceTest {
         // given
         val rentalService = RentalService(rentalRepository, userRepository, carRepository)
         every { rentalRepository.save(any()) } returnsArgument(0)
-        every { carRepository.findOneById(any()) } returns CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0)
+        every { carRepository.findOneById(any()) } returns CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"), "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0)
         every { userRepository.findOneById(any()) } returns UserEntity(ObjectId("64c8c410bebeef1000d78c80"), "Finn", "Hoffmann", "fihoffmann@web.de")
         every { rentalRepository.findByCarEntity(any()) } returns emptyList()
 
@@ -48,14 +50,24 @@ class RentalServiceTest {
         val expectedRental = Rental(
             "64c8c410bebeef1000d78c80",
             User("64c8c410bebeef1000d78c80", "Finn", "Hoffmann", "fihoffmann@web.de"),
-            Car("64c8fb032eb57e0b2626907c", "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
+            Car(
+                "64c8fb032eb57e0b2626907c",
+                Location(
+                    "64c8c410bebeef1000d78c80",
+                    80,
+                    "Breite Strasse",
+                    50667,
+                    "Cologne"
+                ),
+                "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0
+            ),
             LocalDateTime.of(2023, 8, 20, 12, 0),
             LocalDateTime.of(2023, 8, 25, 12, 0),
             48,
             300
         )
 
-        Assertions.assertThat(rental).usingRecursiveComparison().ignoringFields("id", "pricePerDistanceHigh", "pricePerDistanceModerate", "pricePerDistanceLow", "pricePerHourHigh", "pricePerHourModerate", "pricePerHourLow").isEqualTo(expectedRental)
+        Assertions.assertThat(rental).usingRecursiveComparison().ignoringFields("id", "pricePerDistanceHigh", "pricePerDistanceModerate", "pricePerDistanceLow", "pricePerHourHigh", "pricePerHourModerate", "pricePerHourLow", "car").isEqualTo(expectedRental)
     }
 
     @Test
@@ -63,13 +75,13 @@ class RentalServiceTest {
         // given
         val rentalService = RentalService(rentalRepository, userRepository, carRepository)
         every { rentalRepository.save(any()) } returnsArgument(0)
-        every { carRepository.findOneById(any()) } returns CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0)
+        every { carRepository.findOneById(any()) } returns CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"), "Audi", "A5", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0)
         every { userRepository.findOneById(any()) } returns UserEntity(ObjectId("64c8c410bebeef1000d78c80"), "Finn", "Hoffmann", "fihoffmann@web.de")
         every { rentalRepository.findByCarEntity(any()) } returns listOf(
             RentalEntity(
                 ObjectId("64c8fb032eb57e0b2626909c"),
                 UserEntity(ObjectId("64c8c410bebeef1000d78c80"), "Finn", "Hoffmann", "fihoffmann@web.de"),
-                CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), "Audi", "A4", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
+                CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"), "Audi", "A4", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 20, 12, 0),
                 LocalDateTime.of(2023, 8, 25, 12, 0),
                 48,
@@ -99,7 +111,7 @@ class RentalServiceTest {
             RentalEntity(
                 ObjectId("64c8fb032eb57e0b2626909c"),
                 UserEntity(ObjectId("64c8c410bebeef1000d78c80"), "Finn", "Hoffmann", "fihoffmann@web.de"),
-                CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), "Audi", "A4", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
+                CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"), "Audi", "A4", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 20, 12, 0),
                 LocalDateTime.of(2023, 8, 25, 12, 0),
                 48,
@@ -109,7 +121,7 @@ class RentalServiceTest {
             RentalEntity(
                 ObjectId("64c8fb032eb57e0b2626901c"),
                 UserEntity(ObjectId("64c8c410bebeef1000d78c80"), "Kostas", "Lastname", "test@web.de"),
-                CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), "Audi", "A4", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
+                CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"), "Audi", "A4", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
                 LocalDateTime.of(2023, 8, 10, 12, 0),
                 LocalDateTime.of(2023, 8, 15, 12, 0),
                 48,
@@ -131,7 +143,7 @@ class RentalServiceTest {
         every { rentalRepository.findOneById(any()) } returns RentalEntity(
             ObjectId("64c8fb032eb57e0b2626909c"),
             UserEntity(ObjectId("64c8c410bebeef1000d78c80"), "Finn", "Hoffmann", "fihoffmann@web.de"),
-            CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), "Audi", "A4", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
+            CarEntity(ObjectId("64c8fb032eb57e0b2626907c"), LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"), "Audi", "A4", 5, 5.5, 7.5, 5.0, 5.0, 5.0, 5.0),
             LocalDateTime.of(2023, 8, 20, 12, 0),
             LocalDateTime.of(2023, 8, 25, 12, 0),
             48,
