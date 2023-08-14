@@ -58,6 +58,7 @@ class CarController(val carService: CarService) {
     fun createCar(@RequestBody request: CarRequest): ResponseEntity<CarResponse> {
         return ResponseEntity(
             carService.createCar(
+                request.locationId,
                 request.brand, request.model, request.seats,
                 request.pricePerDistanceHigh,
                 request.pricePerDistanceModerate,
