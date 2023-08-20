@@ -51,7 +51,9 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
                 LocalDateTime.of(2023, 8, 20, 12, 0),
                 LocalDateTime.of(2023, 8, 25, 12, 0),
                 48,
-                300
+                300,
+                Location("64d4b15e0632c87bd89d3512", 2, "Im Zollhafen", 50678, "Cologne"),
+                Location("64d4b15e0632c87bd89d3512", 2, "Im Zollhafen", 50678, "Cologne")
             )
 
         mockMvc.perform(MockMvcRequestBuilders.get("/rentals/64c8c410bebeef1000d78c80"))
@@ -88,7 +90,9 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
                 LocalDateTime.of(2023, 8, 20, 12, 0),
                 LocalDateTime.of(2023, 8, 25, 12, 0),
                 48,
-                300
+                300,
+                Location("64d4b15e0632c87bd89d3512", 2, "Im Zollhafen", 50678, "Cologne"),
+                Location("64d4b15e0632c87bd89d3512", 2, "Im Zollhafen", 50678, "Cologne")
             ),
 
             Rental(
@@ -108,7 +112,9 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
                 LocalDateTime.of(2023, 8, 20, 12, 0),
                 LocalDateTime.of(2023, 8, 25, 12, 0),
                 48,
-                300
+                300,
+                Location("64d4b15e0632c87bd89d3512", 2, "Im Zollhafen", 50678, "Cologne"),
+                Location("64d4b15e0632c87bd89d3512", 2, "Im Zollhafen", 50678, "Cologne")
             )
         )
 
@@ -123,14 +129,14 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `createRental() Should return the created Rental & Created Status`() {
-        every { rentalService.createRental(any(), any(), any(), any(), any(), any()) } returns
+        every { rentalService.createRental(any(), any(), any(), any(), any(), any(), any(), any()) } returns
             Rental(
                 "64c8c410bebeef1000d78c80",
                 User("Finn", "64c8c410bebeef1000d78c80", "Hoffmann", "fihoffmann@web.de"),
                 Car(
                     "64c8fb032eb57e0b2626907c",
                     Location(
-                        "64c8c410bebeef1000d78c80",
+                        "64d4b15e0632c87bd89d3512",
                         80,
                         "Breite Strasse",
                         50667,
@@ -141,7 +147,9 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
                 LocalDateTime.of(2023, 8, 20, 12, 0),
                 LocalDateTime.of(2023, 8, 25, 12, 0),
                 48,
-                300
+                300,
+                Location("64d4b15e0632c87bd89d3512", 2, "Im Zollhafen", 50678, "Cologne"),
+                Location("64d4b15e0632c87bd89d3512", 2, "Im Zollhafen", 50678, "Cologne")
             )
 
         val rental = RentalRequest(
@@ -150,7 +158,9 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
             LocalDateTime.of(2023, 8, 20, 12, 0),
             LocalDateTime.of(2023, 8, 25, 12, 0),
             48,
-            300
+            300,
+            "64d4b15e0632c87bd89d3512",
+            "64d4b15e0632c87bd89d3512"
         )
 
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false)
@@ -169,7 +179,7 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
 
     @Test
     fun `createRentalInABookedTimeframe() Should HttpStatus Conflict`() {
-        every { rentalService.createRental(any(), any(), any(), any(), any(), any()) } throws AlreadyRentedException()
+        every { rentalService.createRental(any(), any(), any(), any(), any(), any(), any(), any()) } throws AlreadyRentedException()
 
         val rental = RentalRequest(
             "64c8c410bebeef1000d78c80",
@@ -177,7 +187,9 @@ class RentalControllerTest(@Autowired val mockMvc: MockMvc) {
             LocalDateTime.of(2023, 8, 20, 12, 0),
             LocalDateTime.of(2023, 8, 25, 12, 0),
             48,
-            300
+            300,
+            "64d4b15e0632c87bd89d3512",
+            "64d4b15e0632c87bd89d3512"
         )
 
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false)
