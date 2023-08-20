@@ -59,9 +59,31 @@ class RentalController(val rentalService: RentalService) {
     )
     fun createRental(@RequestBody request: RentalRequest): ResponseEntity<RentalResponse> {
         try {
-            return ResponseEntity(rentalService.createRental(request.userId, request.carId, request.start, request.end, request.hours, request.km).toDTO(), HttpStatus.CREATED)
+            return ResponseEntity(rentalService.createRental(request.userId, request.carId, request.start, request.end, request.hours, request.km, request.startLocationId, request.endLocationId).toDTO(), HttpStatus.CREATED)
         } catch (exception: AlreadyRentedException) {
             throw ResponseStatusException(HttpStatus.CONFLICT, "Car Already Rented")
         }
+    }
+
+    @GetMapping("/topBrands")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "Successful")
+        ]
+    )
+    fun getTopBrands(): ResponseEntity<Map<String, Int>> {
+        return ResponseEntity(rentalService.getTopRentedBrands(), HttpStatus.OK)
+    }
+
+    @GetMapping("/topCitys")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "Successful")
+        ]
+    )
+    fun getTopCitys(): ResponseEntity<Map<String, Int>> {
+        return ResponseEntity(rentalService.getTopRentedCitys(), HttpStatus.OK)
     }
 }

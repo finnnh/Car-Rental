@@ -19,5 +19,9 @@ class RentalEntity(
     var start: LocalDateTime = LocalDateTime.now(),
     var end: LocalDateTime,
     var hours: Int,
-    var km: Int
+    var km: Int,
+    @DocumentReference
+    var startLocationEntity: LocationEntity,
+    @DocumentReference
+    var endLocationEntity: LocationEntity
 )

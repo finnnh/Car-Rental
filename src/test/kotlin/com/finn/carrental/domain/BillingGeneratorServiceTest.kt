@@ -34,7 +34,11 @@ class BillingGeneratorServiceTest {
             ObjectId("64c7a03aa6148808920a8ab6"), LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"),
             "Audi", "A4", 5, 7.5, 5.5, 3.5, 5.5, 3.5, 1.5
         )
-        val rentalEntity = RentalEntity(ObjectId("64c7a03aa6148808920a8ab6"), userEntity, carEntity, LocalDateTime.of(2023, 8, 2, 12, 0), LocalDateTime.of(2023, 8, 5, 12, 0), 12, 300)
+        val rentalEntity = RentalEntity(
+            ObjectId("64c7a03aa6148808920a8ab6"), userEntity, carEntity, LocalDateTime.of(2023, 8, 2, 12, 0), LocalDateTime.of(2023, 8, 5, 12, 0), 12, 300,
+            LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"),
+            LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne")
+        )
 
         val list = listOf(
             RentalEntity(
@@ -44,7 +48,9 @@ class BillingGeneratorServiceTest {
                 LocalDateTime.of(2023, 8, 2, 12, 0),
                 LocalDateTime.of(2023, 8, 5, 12, 0),
                 12,
-                300
+                300,
+                LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne"),
+                LocationEntity(ObjectId("64d4b15e0632c87bd89d3512"), 2, "Im Zollhafen", 50678, "Cologne")
             )
         )
 

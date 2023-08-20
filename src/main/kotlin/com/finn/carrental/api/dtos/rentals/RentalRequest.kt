@@ -21,5 +21,11 @@ class RentalRequest(
     val hours: Int,
 
     @Schema(example = "300")
-    val km: Int
+    val km: Int,
+
+    @Schema(example = "64c8c410bebeef1000d78c80")
+    val startLocationId: String,
+
+    @Schema(example = "64c8c410bebeef1000d78c80")
+    val endLocationId: String
 )
