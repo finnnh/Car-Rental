@@ -16,6 +16,8 @@ This is an API created with Springboot in Kotlin, that I did during a 2 Week Int
 - Get A User/Car/Rental by ID
 - Swagger-Docs
 - Car Pricing (Linear or Steps)
+- Add Service Locations
+- Brand & City Leaderboard
 
 
 ## Documentation
